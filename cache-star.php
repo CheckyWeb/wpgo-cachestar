@@ -87,7 +87,8 @@ function cache_star_plugin() {
 
 			<button id="cache-star-purge" class="btn btn-primary">PURGE GOOGLEPAGESPEED CACHE</button>
 		</div>
-		<div class="alerts-container"></div>
+		<div class="alerts-container">	
+		</div>
 		<div class ="cache-star-controls">
 			<div class ="cache-star-option">
 				<h4><strong>Page Cache </strong></h4>
@@ -207,7 +208,7 @@ function my_action_javascript() { ?>
 
 				}else{
 					//location.reload();
-					jQuery(".alerts-container").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Failed to enable Cache</div>');
+					jQuery(".alerts-container").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Failed to enable force HTTPS</div>');
 				}
 			});
 		});
@@ -229,7 +230,7 @@ function my_action_javascript() { ?>
 
 				}else{
 					//location.reload();
-					jQuery(".alerts-container").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Failed to enable Cache</div>');
+					jQuery(".alerts-container").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Failed to disable force HTTPS</div>');
 				}
 			});
 		});
@@ -358,7 +359,7 @@ function my_action_javascript() { ?>
 					
 					location.reload();
 				}else{
-					jQuery(".alerts-container").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Failed to disable GZIP</div>');
+					jQuery(".alerts-container").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Failed to save HTACCESS</div>');
 
 				}
 			});
@@ -401,16 +402,15 @@ function cache_star_htaccess(){
 }	
 //check if x-mod-pagespeed is present in website headers
 function cache_star_headers() {
-	
+	$url = site_url();
 	$request = new WP_Http;
-	$result = $request->request( 'https://wpgo.com.au' );
+	$result = $request->request( $url );
 
 	if( $result['headers']['x-mod-pagespeed'] ){
 		return true;
 	}else{
 		return false;
 	}
-	
 	wp_die();
 
 }
@@ -419,17 +419,19 @@ function cache_star_headers() {
 //purge cache
 add_action( 'wp_ajax_cache_star_purge', 'cache_star_purge' );
 function cache_star_purge() {
-	$purge_url = get_home_url()."/*";
+	$url = site_url()."/*";
+	
+
  	$ch = curl_init();
  	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PURGE');
-    curl_setopt($ch, CURLOPT_URL, $purge_url);
+    curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
     curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
-    curl_setopt($ch, CURLOPT_NOBODY  , true);  // we don't need body
     $response = curl_exec($ch);
    	echo $response;
 	wp_die(); // this is required to terminate immediately and return a proper response
+	
 
 }
 
