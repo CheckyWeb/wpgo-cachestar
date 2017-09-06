@@ -67,13 +67,13 @@ function cache_star_plugin() {
 	if( !$check_modpagespeed || gethostname() != 's1.wpgo.com.au'){
 
 		$modepagespeed_summary = '<span class="cache-star-disabled"><strong>FALSE</strong></span>';
-		$modpagespeed = '<span class ="cache-top-span">Note: </span><p>Your Hosting account does not have Google Mod Page Speed installed.</p>';
+		$modpagespeed = '<span class ="cache-top-span">Note: </span><p>&nbsp; Your Hosting account does not have Google Mod Page Speed installed.</p>';
 	}else{
 		$modepagespeed_summary = '<span class="cache-star-enabled"><strong>COMPLETED</strong></span>';
 	}
 
 	?>
-	<div class="cache-star-container">
+	<div class="cache-star-container" id="cache-star-id">
 		<div class ="cache-star-top">
 			<div class = "cache-star-title">
 				<h1>WPGO CACHE STAR</h1>
@@ -704,11 +704,11 @@ function cache_star_enqueue_style()
 
 {   
 
-	wp_enqueue_style( 'cache_star_bootstrap_style', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css' );
+	//wp_enqueue_style( 'cache_star_bootstrap_style', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css' );
 
-    wp_enqueue_style( 'cache_star_style', plugin_dir_url( __FILE__ ) . 'css/cachestar.css',array(), '4.9' );
+    wp_enqueue_style( 'cache_star_style', plugin_dir_url( __FILE__ ) . 'css/cachestar.css',array(), '5.3' );
 
-    wp_enqueue_script( 'cache_star_bootstrap_script', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js', array(), '1.0' );
+    //wp_enqueue_script( 'cache_star_bootstrap_script', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js', array(), '1.0' );
 
 }
 
